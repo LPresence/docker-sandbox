@@ -56,7 +56,7 @@ sudo pip install docker-compose
 sudo ufw --force enable
 
 ####### According to docker documentation we should force DEFAULT_FORWARD_POLICY to ACCEPT - However DROP should be OK for realease > 1.10 ######
-sudo sed -i 's|DEFAULT_FORWARD_POLICY="DROP"|DEFAULT_FORWARD_POLICY="ACCEPT"|g' /etc/default/ufw
+sudo sed -i 's|DEFAULT_FORWARD_POLICY="ACCEPT"|DEFAULT_FORWARD_POLICY="DROP"|g' /etc/default/ufw
 sudo ufw --force reload
 
 ######### Enabling ssh access to the VM #######
@@ -71,8 +71,8 @@ sudo ufw allow 2376/tcp
 ###### Catching IP address of eth1 will be used to bind docker daemon to this IP ##### 
 ip=$(ifconfig eth1 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}')
 
-#### Make docker listening on unix socket and eth1 - Enabling devicemapper instead of aufs (dependencies with Virtualbox image) -Enabling logging to Graylog #####
-sudo echo DOCKER_OPTS=\"-D --storage-driver=devicemapper --tls=false -H unix:///var/run/docker.sock -H tcp://$ip:2375\" >> /etc/default/docker
+#### Make docker listening on unix socket and eth1 - Enabling devicemapper instead of aufs (dependencies with Virtualbox image) - Disabling icc #####
+sudo echo DOCKER_OPTS=\"-D --icc=false --storage-driver=devicemapper --tls=false -H unix:///var/run/docker.sock -H tcp://$ip:2375\" >> /etc/default/docker
 sudo service docker restart
 
 
