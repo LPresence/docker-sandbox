@@ -1,4 +1,4 @@
-# Vagrant learn-advanced-docker
+# Vagrant docker-sandbox
 
 Vagrant learn-advanced-docker creates ready-to-go [Docker] (https://www.docker.com/) VM.
 
