@@ -16,7 +16,7 @@
 
 Vagrant.configure(2) do |config|
 
-	config.vm.define "docker" do |docker|
+	
 
 #### Not using ubuntu/trusty64 image as it doesn't have LVM enabled
 
@@ -32,7 +32,7 @@ Vagrant.configure(2) do |config|
 		opa.vm.provision :shell, path: "install-opa.sh"
     end
 
-
+    config.vm.define "docker" do |docker|
 	docker.vm.box = "addgene/trusty64"
 			config.vm.provider "virtualbox" do |v|
 				v.cpus = 1
