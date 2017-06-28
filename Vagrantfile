@@ -23,8 +23,8 @@ Vagrant.configure(2) do |config|
 	config.vm.define "opa" do |opa|
 	opa.vm.box = "addgene/trusty64"
 			config.vm.provider "virtualbox" do |v|
-				v.cpus = 2
-				v.memory = 2048
+				v.cpus = 1
+				v.memory = 1024
 			end
         opa.vm.hostname ="opa"
 		opa.vm.network "private_network", ip: "192.168.99.107"
@@ -35,8 +35,8 @@ Vagrant.configure(2) do |config|
 
 	docker.vm.box = "addgene/trusty64"
 			config.vm.provider "virtualbox" do |v|
-				v.cpus = 2
-				v.memory = 2048
+				v.cpus = 1
+				v.memory = 1024
 			end
         docker.vm.hostname ="docker"
 		docker.vm.network "private_network", ip: "192.168.99.106"
