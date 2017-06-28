@@ -1,0 +1,29 @@
+version: '2'
+
+services:
+
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    environment:
+      DEFAULT_HOST: wordpress
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+
+  wordpress:
+    image: wordpress
+    environment:
+      WORDPRESS_DB_USER: gilles
+      WORDPRESS_DB_PASSWORD: gilles
+      WORDPRESS_DB_NAME: demo_wordpress
+      VIRTUAL_HOST: wordpress
+
+  mysql:
+    image: mysql
+    environment:
+      MYSQL_DATABASE: demo_wordpress
+      MYSQL_USER: gilles
+      MYSQL_PASSWORD: gilles
+      MYSQL_ROOT_PASSWORD: mystrongpassword
+
