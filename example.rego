@@ -1,21 +1,3 @@
-#!/bin/sh
-sudo mkdir -p /policies
-sudo tee /policies/system.rego<<DOG
-package system.authz
-
-default allow = false          # Reject requests by default.
-
-allow {                        # Allow request if...
-    input.method = "GET"  
-}
-
-allow {
-    input.method = "POST" 
-}
-
-DOG
-
-sudo tee /policies/example.rego<<CAT
 package opa.example
 
 allow_request {
@@ -118,7 +100,3 @@ privileged_mode {
     # to an element in the array SecurityOpt referenced on the left-hand side.
     input.Body.HostConfig.SecurityOpt[_] = "seccomp:unconfined"
 }
-
-CAT
-docker run -d -p 8181:8181 -v /policies:/policies openpolicyagent/opa  run --server --log-level debug --authorization=basic /policies/system.rego /policies/example.rego
-
