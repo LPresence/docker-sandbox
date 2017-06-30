@@ -23,6 +23,18 @@ allow_request {
 }
 
 privileged_mode {
+# Don't allow to docker load
+pattern = "/images/load"
+re_match(pattern,input.Path)
+
+privileged_mode {
+# Don't allow to run a specific image
+pattern = "jpetazzo/nsenter"
+re_match(pattern,input.Body.Image)
+
+}
+}
+privileged_mode {
 # Don't allow to bind / from host
 pattern = "/:"
 re_match(pattern,input.Body.HostConfig.Binds[_])
@@ -107,7 +119,10 @@ privileged_mode {
    # Don't not use UTSMode  host
    input.Body.HostConfig.UTSMode = "host"
 }
-
+privileged_mode {
+   # Don't not use Userns host
+   input.Body.HostConfig.UsernsMode="host"
+}
 privileged_mode {
   #Never use --net=host
   input.Body.HostConfig.NetworkMode = "host"
