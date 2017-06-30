@@ -2,20 +2,23 @@
 
 Vagrant learn-advanced-docker creates ready-to-go [Docker] (https://www.docker.com/) VM.
 
-The Vagrantfile creates a [Docker] (https://www.docker.com/) Machine with below components installed
+The Vagrantfile creates
 
-+ **Docker Engine**
-+ **Docker Compose**
++ [Docker] (https://www.docker.com/) Machine with below components installed
 
+++ **Docker Engine**
+++ **Docker Compose**
 
 Once Docker launch it runs Docker Security Benchmark.
+
++ [Opa] (http://www.openpolicyagent.org/tutorials/docker-authorization/) 
 
 ## Requirements
 
 - [VirtualBox](https://www.virtualbox.org/wiki/Downloads). Tested on 5.1.0, but should also work on 5.0.20+ release.
 - [Vagrant](http://www.vagrantup.com/downloads.html). Tested on 1.8.4
 
-The VM is provisioned using addgene/trusty64 (Ubuntu 14.04 Trusty Tahr) from [atlas.hashicorp.com] (https://atlas.hashicorp.com/) images, thus your workstation must have a direct internet access. 
+The VM is provisioned using addgene/trusty64 (Ubuntu 14.04 Trusty Tahr) from [atlas.hashicorp.com] (https://atlas.hashicorp.com/) images, thus your workstation must have a direct internet access.
 
 ## VMs details
 
@@ -44,7 +47,7 @@ Run the commands below:
 
 2. The setup will take some time to finish (approximatively 5-30 minutes depending on your hardware and Internet connection speed). Sit back and enjoy!
 
-3. When the setup is done you can connect to your VM using crentials and start discovering docker :). 
+3. When the setup is done you can connect to your VM using crentials and start discovering docker :).
 
 
 ## Know issues
@@ -62,4 +65,3 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE
-
