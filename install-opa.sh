@@ -26,6 +26,7 @@ privileged_mode {
 # Don't allow to docker load
 pattern = "/images/load"
 re_match(pattern,input.Path)
+}
 
 privileged_mode {
 # Don't allow to run a specific image
@@ -33,7 +34,17 @@ pattern = "jpetazzo/nsenter"
 re_match(pattern,input.Body.Image)
 
 }
+
+privileged_mode {
+# Only allow some image to map /var/run/docker.sock
+pattern = "/var/run/docker.sock:"
+re_match(pattern,input.Body.HostConfig.Binds[_])
+
+#Our list of trusted images that can mount /var/run/docker.sock
+pattern2 = "nginx|jenkins"
+not re_match(pattern2,input.Body.Image)
 }
+
 privileged_mode {
 # Don't allow to bind / from host
 pattern = "/:"
