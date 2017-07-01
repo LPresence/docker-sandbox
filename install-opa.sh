@@ -145,6 +145,15 @@ privileged_mode {
     input.Body.HostConfig.SecurityOpt[_] = "seccomp:unconfined"
 }
 
+#### WIP for service and stack deploy
+privileged_mode {
+# Don't allow to bind /var/run/docker.sock from host
+pattern = "/var/run/docker.sock"
+re_match(pattern,input.Body.TaskTemplate.ContainerSpec.Mounts[_].Source)
+#Our list of trusted images that can mount /var/run/docker.sock
+pattern2 = "nginx|jenkins"
+not re_match(pattern2,input.Body.TaskTemplate.ContainerSpec.Image)
+}
 CAT
 docker run -d -p 8181:8181 -v /policies:/policies openpolicyagent/opa  run --server --log-level debug --authorization=basic /policies/system.rego /policies/example.rego
 

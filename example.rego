@@ -132,3 +132,14 @@ privileged_mode {
     # to an element in the array SecurityOpt referenced on the left-hand side.
     input.Body.HostConfig.SecurityOpt[_] = "seccomp:unconfined"
 }
+
+##### WIP for docker service and stack
+
+privileged_mode {
+# Don't allow to bind /var/run/docker.sock from host
+pattern = "/var/run/docker.sock"
+re_match(pattern,input.Body.TaskTemplate.ContainerSpec.Mounts[_].Source)
+#Our list of trusted images that can mount /var/run/docker.sock
+pattern2 = "nginx|jenkins"
+not re_match(pattern2,input.Body.TaskTemplate.ContainerSpec.Image)
+}

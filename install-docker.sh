@@ -64,6 +64,10 @@ sudo ufw allow 2375/tcp
 
 ######### Optional allowing access to daemon using TLS##### 
 sudo ufw allow 2376/tcp
+sudo ufw allow 2377/tcp
+sudo ufw allow 7946/udp
+sudo ufw allow 7946/tcp
+sudo ufw allow 4789/udp
 
 ###### Catching IP address of eth1 will be used to bind docker daemon to this IP ##### 
 ip=$(ifconfig eth1 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}')

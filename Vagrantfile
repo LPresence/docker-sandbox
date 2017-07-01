@@ -32,18 +32,32 @@ Vagrant.configure(2) do |config|
 		opa.vm.provision :shell, path: "install-opa.sh"
     end
 
-    config.vm.define "docker" do |docker|
-	docker.vm.box = "addgene/trusty64"
+    config.vm.define "manager" do |manager|
+	manager.vm.box = "addgene/trusty64"
 			config.vm.provider "virtualbox" do |v|
 				v.cpus = 2
 				v.memory = 2048
 			end
-        docker.vm.hostname ="docker"
-		docker.vm.network "private_network", ip: "192.168.99.106"
-		docker.vm.provision :shell, path: "install-docker.sh"
-		docker.vm.provision :shell, path: "enable-opa.sh"
+        manager.vm.hostname ="docker"
+		manager.vm.network "private_network", ip: "192.168.99.106"
+		manager.vm.provision :shell, path: "install-docker.sh"
+		manager.vm.provision :shell, path: "enable-opa.sh"
+		manager.vm.provision :shell, inline: "sudo docker swarm init --advertise-addr 192.168.99.106"
+        manager.vm.provision :shell, inline: "docker swarm join-token -q worker >/vagrant/worker-token"
 		
     end
-    
+	
+    config.vm.define "worker" do |worker|
+	worker.vm.box = "addgene/trusty64"
+			config.vm.provider "virtualbox" do |v|
+				v.cpus = 2
+				v.memory = 2048
+			end
+        worker.vm.hostname ="docker"
+		worker.vm.network "private_network", ip: "192.168.99.108"
+		worker.vm.provision :shell, path: "install-docker.sh"
+		worker.vm.provision :shell, path: "enable-opa.sh"
+		worker.vm.provision :shell, inline: "docker swarm join --token $(cat /vagrant/worker-token) --advertise-addr 192.168.99.108 192.168.99.106:2377"
+    end
 
 end
