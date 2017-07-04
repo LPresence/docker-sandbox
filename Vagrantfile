@@ -44,7 +44,7 @@ Vagrant.configure(2) do |config|
 		manager.vm.provision :shell, path: "enable-opa.sh"
 		manager.vm.provision :shell, inline: "sudo docker swarm init --advertise-addr 192.168.99.106"
         manager.vm.provision :shell, inline: "docker swarm join-token -q worker >/vagrant/worker-token"
-		
+		manager.vm.provision :shell, path: "set-apparmor.sh"
     end
 	
     config.vm.define "worker" do |worker|
@@ -58,6 +58,7 @@ Vagrant.configure(2) do |config|
 		worker.vm.provision :shell, path: "install-docker.sh"
 		worker.vm.provision :shell, path: "enable-opa.sh"
 		worker.vm.provision :shell, inline: "docker swarm join --token $(cat /vagrant/worker-token) --advertise-addr 192.168.99.108 192.168.99.106:2377"
+		worker.vm.provision :shell, path: "set-apparmor.sh"
     end
 
 end
