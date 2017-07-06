@@ -6,12 +6,12 @@ The Vagrantfile creates
 
 + [Docker] (https://www.docker.com/) Machine with below components installed
 
-++ **Docker Engine**
-++ **Docker Compose**
+    + **Docker Engine**
+    + **Docker Compose**
 
 Once Docker launch it runs Docker Security Benchmark.
 
-+ [Opa] (http://www.openpolicyagent.org/tutorials/docker-authorization/) 
++ [Opa] (http://www.openpolicyagent.org/tutorials/docker-authorization/)
 
 ## Requirements
 

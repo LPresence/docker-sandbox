@@ -3,7 +3,7 @@
 
 
 echo "Build start at    :" > /tmp/build
-date >> /tmp/build 
+date >> /tmp/build
 
 ###### Update our cache #####
 sudo apt-get update -y
@@ -17,16 +17,18 @@ sudo apt-get install thin-provisioning-tools -y
 
 ###############     Installing Docker            ###################
 
-sudo apt-get install apt-transport-https ca-certificates -y
-sudo apt-key adv --keyserver --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
-sudo touch /etc/apt/sources.list.d/docker.list
-sudo rm /etc/apt/sources.list.d/docker.list
-sudo echo deb https://apt.dockerproject.org/repo ubuntu-trusty main > /etc/apt/sources.list.d/docker.list
+sudo apt-get install apt-transport-https ca-certificates curl software-properties-common -y
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+#sudo touch /etc/apt/sources.list.d/docker.list
+#sudo rm /etc/apt/sources.list.d/docker.list
+#sudo echo deb https://apt.dockerproject.org/repo ubuntu-trusty main > /etc/apt/sources.list.d/docker.list
 sudo apt-get update -y
-sudo apt-get purge lxc-docker
-sudo apt-cache policy docker-engine
+#sudo apt-get purge lxc-docker
+#sudo apt-cache policy docker-engine
 sudo apt-get upgrade -y
-sudo apt-get install linux-image-extra-$(uname -r) -y
+sudo apt-get install docker-ce -y
+#sudo apt-get install linux-image-extra-$(uname -r) -y
 
 
 ##### Option : install specific version of docker - run apt-cache madison docker-engine to see which version are available ####
@@ -42,11 +44,10 @@ sudo usermod -aG docker vagrant
 ################     Installing Docker-Compose            ###################
 ################     This will install docker-compose     ###################
 
-sudo apt-get -y install curl
-sudo curl -L "https://github.com/docker/compose/releases/download/1.10.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+#sudo curl -L "https://github.com/docker/compose/releases/download/1.10.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 
 ################     Updating host and ufw                ###################
-	
+
 
 sudo ufw --force enable
 
@@ -60,10 +61,10 @@ sudo ufw allow 22/tcp
 ######### Allowing access to docker daemon ####
 sudo ufw allow 2375/tcp
 
-######### Optional allowing access to daemon using TLS##### 
+######### Optional allowing access to daemon using TLS#####
 sudo ufw allow 2376/tcp
 
-###### Catching IP address of eth1 will be used to bind docker daemon to this IP ##### 
+###### Catching IP address of eth1 will be used to bind docker daemon to this IP #####
 ip=$(ifconfig eth1 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}')
 
 #### Make docker listening on unix socket and eth1 - Enabling devicemapper instead of aufs (dependencies with Virtualbox image) - Disabling icc #####
